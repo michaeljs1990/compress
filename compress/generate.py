@@ -69,7 +69,7 @@ class GenerateCommand(object):
             - [x] build
             - [o] env_file
             - [x] extends.file
-            - [o] volumes
+            - [x] volumes
 
         Keyword arguments:
             include_yaml -- yaml structure of included file
@@ -110,8 +110,7 @@ class GenerateCommand(object):
 
         return transformed_yaml
 
-    @staticmethod
-    def alter_property(key, value, include_path):
+    def alter_property(self, key, value, include_path):
         """
         Check if the given key needs to be changed. If
         it does change the value according to the
@@ -129,5 +128,25 @@ class GenerateCommand(object):
            key == "dockerfile" or
            key == "build"):
             altered_value = include_path + "/" + value
+        elif key == "volumes":
+            altered_value = self.alter_volumes(value, include_path)
 
         return altered_value
+
+    @staticmethod
+    def alter_volumes(yaml_list, include_path):
+        """
+        Change the volumes if they are not absolute paths
+
+        Keyword arguments:
+            yaml_list -- yaml list of volumes
+            include_path -- path of the file that is currently
+                            being included
+        """
+        altered_list = list(yaml_list)
+
+        for key, value in enumerate(yaml_list):
+            if value[0] != "/":
+                altered_list[key] = include_path + "/" + value
+
+        return altered_list
