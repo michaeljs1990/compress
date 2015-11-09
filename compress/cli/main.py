@@ -1,32 +1,41 @@
+"""
+This is the entrypoint to the compress CLI. All argument
+parsing is done in this file and then passed to the proper
+command to carry out the required work.
+"""
 #!/usr/bin/env python
 from docopt import docopt
 from inspect import getdoc
 
-from ..generate import GenerateCommand
+from compress.generate import GenerateCommand
 
-def main():
-    command = CompressCommand()
-    command.run()
-
-class CompressCommand():
+class CompressCommand(object):
     """
     Generate docker compose files for complex environments.
     Usage:
-      docker-compress generate [--file-out FILE_OUT]
-      docker-compress version
+        docker-compress <COMMAND> [--file-in FILE_IN]
+
     Options:
-      -f, --file FILE           Specify an alternate compress file (default: docker-compress.yml)
-      --verbose                 Show more output
-      -v, --version             Print version and exit
+        --file-in        Specify an alternate compress file (default: docker-compress.yml)
+        --verbose        Show debug output
+
     Commands:
-      generate           Generate a new docker-compose.yml file
-      version            Show the Docker-Compose version information
+        generate           Generate a new docker-compose.yml file
+        version            Show the docker-compress version information
     """
 
-    def run(self):
+    def __init__(self):
         doc = getdoc(self)
         arguments = docopt(doc)
-        generate = arguments.get('generate')
-        if generate:
-            genCmd = GenerateCommand(arguments)
-            genCmd.run()
+        cmd = arguments.get('<COMMAND>')
+        if cmd == "generate":
+            gen_cmd = GenerateCommand(arguments)
+            gen_cmd.run()
+        if cmd == "version":
+            print "0.0.1"
+
+def main():
+    """
+    Script entrypoint as defined in setup.py
+    """
+    CompressCommand()
