@@ -1,6 +1,12 @@
 # Docker Compress
 Using micro services? Have to maintain repos full of docker-compose.yml files to glue everything together? This project allows you to create a simple file that then generates your docker-compose.yml file for you based off of your config file making it so that you don't have to keep track of 10 different files anymore.
 
+#### Install
+
+This package can be installed through pythons trusted pip package manager. Be advised although this is currently in beta and the error warning may not be be the most user friendly. If you run into any issues please create an issue with the full stack trace as well as the command that you ran.
+
+    pip install docker-compress
+
 #### Example
 
 This is your firsts repo using docker and it contains a docker-compose.yml file that looks like this.
@@ -34,7 +40,7 @@ Both of these files live in the base of each repo.
 In the past you may have a third docker compose file that combines the info that is found in the repositories creating lots of duplicate information. Now you can create a `.compress` file in whatever directory you choose and tell it how the docker-compose.yml file should look. This .compress file would be places at the same level as micro-one and micro-two however you can put it whatever you would like.
 
     # .compress
-    files:
+    include:
       - micro-one/docker-compose.yml
       - micro-two/docker-compose.yml
     extend:
@@ -72,3 +78,6 @@ The following are requirement to develop. Although you can do it in different wa
 - `virtualenv env`
 - `env/bin/pip install -r requirements.txt`
 - `env/bin/python setup.py develop` for more info see [setuptools](https://pythonhosted.org/setuptools/setuptools.html)
+- `./env/bin/docker-compress` from the project root should allow you to now see quick feedback on changes you make.
+- If anything is changed in the setup.py file while developing you will need to rerun `env/bin/python setup.py develop`.
+- Right now only have manual tests since huge breaking changes will likely come until a 1.0 is released please read over the `tests/README.md` file.
