@@ -1,0 +1,14 @@
+host:
+    extends:
+        file: ../micro_service_two/docker/base.yml
+        service: host
+    links:
+    - host2
+    volumes:
+    - ../micro_service_two/../.:/src
+host2:
+    extends:
+        file: docker/base.yml
+        service: host
+    volumes_from:
+    - storage
