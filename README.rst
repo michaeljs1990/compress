@@ -85,3 +85,8 @@ The following are requirement to develop. Although you can do it in different wa
 - `./env/bin/docker-compress` from the project root should allow you to now see quick feedback on changes you make.
 - If anything is changed in the setup.py file while developing you will need to rerun `env/bin/python setup.py develop`.
 - Right now only have manual tests since huge breaking changes will likely come until a 1.0 is released please read over the `tests/README.md` file.
+
+#### Publishing Build
+
+- `env/bin/python setup.py register`
+- `env/bin/python setup.py sdist bdist_wheel upload`

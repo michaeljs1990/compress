@@ -13,7 +13,7 @@ INSTALL_REQUIRES = [
 
 setup(name='docker-compress',
       provides=["compress"],
-      version='0.1',
+      version='0.1.1',
       description='Docker compose file merger',
       url='http://github.com/michaeljs1990/compress',
       author='Michael Schuett',
@@ -22,5 +22,5 @@ setup(name='docker-compress',
       install_requires=INSTALL_REQUIRES,
       entry_points="""
       [console_scripts]
-      docker-compress=compress.cli.main:main
+      docker-compress = compress.cli.main:main
       """,)
