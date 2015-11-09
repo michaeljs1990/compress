@@ -88,5 +88,6 @@ The following are requirement to develop. Although you can do it in different wa
 
 #### Publishing Build
 
+- `env/bin/python setup.py install`
 - `env/bin/python setup.py register`
 - `env/bin/python setup.py sdist bdist_wheel upload`
