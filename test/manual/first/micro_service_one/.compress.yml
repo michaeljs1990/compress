@@ -1,0 +1,8 @@
+include:
+  - ../micro_service_two/test.yml
+  - test2.yml
+
+extend:
+  host:
+    links:
+      - host2

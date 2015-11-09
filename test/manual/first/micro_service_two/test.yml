@@ -1,0 +1,6 @@
+host:
+  extends:
+    file: docker/base.yml
+    service: host
+  volumes_from:
+    - storage
