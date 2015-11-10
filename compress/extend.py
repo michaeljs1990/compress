@@ -53,5 +53,16 @@ class ExtendYaml(object):
             yaml_value -- value in dict generated from yaml file
         """
         altered_yaml = self.yaml_struct[yaml_key].copy()
+        # Special care must be taken for merging links so as
+        # to not drop other links. If this grows in popularity we
+        # will have to see if this is what users expect or if
+        # we need something a little more fancy.
+        if('links' in altered_yaml and
+           'links' in yaml_value and
+           yaml_value['links'].__class__ is list and
+           altered_yaml['links'].__class__ is list):
+            yaml_value['links'] = altered_yaml['links'] + yaml_value['links']
+
         altered_yaml.update(yaml_value)
+
         return altered_yaml

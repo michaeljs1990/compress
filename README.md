@@ -23,11 +23,13 @@ This package can be installed through pythons trusted pip package manager. Be ad
 
 #### Important Notes
 
-Since the feature set is still in it's early stages this does not work with all docker-compose syntax. The `extend` feature should be avoided although it does work in practice if you have volumes, dockerfile, or build nested inside the file that you are extending the paths will not be updated properly. `env_file` is not supported currently but will be soon I just haven't had time to add it yet and I don't use it often so it's at the back of the list.
+Since the feature set is still in it's early stages this does not work with all docker-compose syntax. The `extend` feature should be avoided although it does work in practice if you have volumes or build nested inside the file that you are extending the paths will not be updated properly. `env_file` is not supported currently but will be soon I just haven't had time to add it yet and I don't use it often so it's at the back of the list.
 
-IMPORTANT: since docker requires a `context` you can't use ../ when building which means that although you will likely want to store the .compress.yml file in the repo you will need to copy or symlink it into the parent directory and then generate the file or you will get errors. Unfortunately this is the way docker does builds so we have no way around it. In the `Example` section I have shown how your directory structure should look when running `generate`.
+#### Upstream issues
 
-https://github.com/docker/compose/issues/2092 once this is resolved this repo will become much more useful since we can reuse images.
+The following issues upstream are currently limiting some functionality from being written.
+
+- https://github.com/docker/compose/issues/2092 once this is resolved this repo will become much more useful since we can reuse images between combinations of micro service `a`, `y`, and, `x` where `y` has a dependency on `x` and `x` has a dependency on `a` but `x` does not need `y` to run.
 
 #### Example
 
@@ -54,18 +56,17 @@ Repo two also has a docker-compose.yml file. However repo two can't run or even 
 Both of these files live in the base of each repo.
 
     .
-    ├── .compress.yml
     ├── micro-one
     │   └── docker-compose.yml
     └── micro-two
         └── docker-compose.yml
 
-In the past you may have a third docker compose file that combines the info that is found in the repositories creating lots of duplicate information. Now you can create a `.compress` file in whatever directory you choose and tell it how the docker-compose.yml file should look. This .compress file would be places at the same level as micro-one and micro-two however you can put it whatever you would like.
+In the past you may have a third docker compose file that combines the info that is found in the repositories creating lots of duplicate information. Now you can create a `.compress` file in whatever directory you choose and tell it how the docker-compose.yml file should look. This .compress file would be placed inside micro-one or micro-two in the example below it has been placed in micro-one.
 
     # .compress
     include:
-      - micro-one/docker-compose.yml
-      - micro-two/docker-compose.yml
+      - docker-compose.yml
+      - ../micro-two/docker-compose.yml
     extend:
       web:
         link:
