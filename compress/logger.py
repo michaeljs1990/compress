@@ -30,8 +30,8 @@ class Logger(object):
         cls.logger = logger
 
     @classmethod
-    def info(cls, string):
+    def info(cls, string, *opts):
         """
         Print info out to screen
         """
-        cls.logger.info(string)
+        cls.logger.info(string, *opts)

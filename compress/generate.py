@@ -55,7 +55,7 @@ class GenerateCommand(object):
         """
         include_files = dict()
         for include in config_yaml['include']:
-            Logger.info("Including " + include)
+            Logger.info("Including %s", include)
             yaml_file = fetch_yaml_file(self.base_dir + include)
             altered_yaml = self.alter_pathing(yaml_file, include)
             # TODO: Will need to be smarter about merging in the
