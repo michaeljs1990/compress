@@ -72,7 +72,6 @@ class GenerateCommand(object):
         when a file not located at the same directory level
         as the .compress.yml file is passed into this function.
 
-            - [x] dockerfile
             - [x] build
             - [o] env_file
             - [x] extends.file
@@ -132,7 +131,6 @@ class GenerateCommand(object):
         altered_value = value
 
         if(key == "file" or
-           key == "dockerfile" or
            key == "build"):
             altered_value = include_path + "/" + value
         elif key == "volumes":

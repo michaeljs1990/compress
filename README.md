@@ -25,7 +25,9 @@ This package can be installed through pythons trusted pip package manager. Be ad
 
 Since the feature set is still in it's early stages this does not work with all docker-compose syntax. The `extend` feature should be avoided although it does work in practice if you have volumes, dockerfile, or build nested inside the file that you are extending the paths will not be updated properly. `env_file` is not supported currently but will be soon I just haven't had time to add it yet and I don't use it often so it's at the back of the list.
 
-https://github.com/docker/compose/issues/2092
+IMPORTANT: since docker requires a `context` you can't use ../ when building which means that although you will likely want to store the .compress.yml file in the repo you will need to copy or symlink it into the parent directory and then generate the file or you will get errors. Unfortunately this is the way docker does builds so we have no way around it. In the `Example` section I have shown how your directory structure should look when running `generate`.
+
+https://github.com/docker/compose/issues/2092 once this is resolved this repo will become much more useful since we can reuse images.
 
 #### Example
 
@@ -52,6 +54,7 @@ Repo two also has a docker-compose.yml file. However repo two can't run or even 
 Both of these files live in the base of each repo.
 
     .
+    ├── .compress.yml
     ├── micro-one
     │   └── docker-compose.yml
     └── micro-two
