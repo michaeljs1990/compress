@@ -8,6 +8,7 @@ from docopt import docopt
 from inspect import getdoc
 
 from compress.generate import GenerateCommand
+from compress.logger import Logger
 
 class CompressCommand(object):
     """
@@ -32,10 +33,11 @@ class CompressCommand(object):
             gen_cmd = GenerateCommand(arguments)
             gen_cmd.run()
         if cmd == "version":
-            print "0.0.1"
+            print "0.1.3"
 
 def main():
     """
     Script entrypoint as defined in setup.py
     """
+    Logger.configure()
     CompressCommand()

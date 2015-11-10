@@ -5,8 +5,9 @@ section and merge it into a base docker-compose.yml. If any of the included
 files have include sections continue to fetch and merge each of them until
 there are no more files to include.
 """
-from os import path
+import os
 
+from compress.logger import Logger
 from compress.utils import fetch_yaml_file, write_yaml_file
 from compress.extend import ExtendYaml
 
@@ -22,10 +23,14 @@ class GenerateCommand(object):
             args -- dict containing all CLI flags
         """
         self.compress_file = args.get('FILE_IN')
+        self.base_dir = ""
         if self.compress_file == None:
             self.compress_file = ".compress.yml"
         else:
-            self.base_dir = path.dirname(self.compress_file) + "/"
+            self.base_dir = os.path.dirname(self.compress_file) + "/"
+            # Make check for case where the file is relative
+            if self.base_dir == "/":
+                self.base_dir = ""
 
     def run(self):
         """
@@ -37,6 +42,7 @@ class GenerateCommand(object):
         include_files = self.load_imports(compress_config)
         extended_file = ExtendYaml(include_files, compress_config).parse()
         write_yaml_file(self.base_dir + "docker-compose.gen.yml", extended_file)
+        Logger.info("docker-compose.gen.yml file generated")
 
 
     def load_imports(self, config_yaml):
@@ -49,6 +55,7 @@ class GenerateCommand(object):
         """
         include_files = dict()
         for include in config_yaml['include']:
+            Logger.info("Including " + include)
             yaml_file = fetch_yaml_file(self.base_dir + include)
             altered_yaml = self.alter_pathing(yaml_file, include)
             # TODO: Will need to be smarter about merging in the
@@ -76,7 +83,7 @@ class GenerateCommand(object):
                             listed in the .compress.yml file
             include_file -- file name or path of included file
         """
-        include_path = path.dirname(include_file)
+        include_path = os.path.dirname(include_file)
         return_yaml = include_yaml.copy()
         if include_path != "":
             return_yaml = self.recurse_yaml(include_yaml, include_path)

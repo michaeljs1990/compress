@@ -7,9 +7,25 @@ This package can be installed through pythons trusted pip package manager. Be ad
 
     pip install docker-compress
 
+#### Usage
+
+    Generate docker compose files for complex environments.
+      Usage:
+          docker-compress <COMMAND> [--file-in FILE_IN]
+
+      Options:
+          --file-in        Specify an alternate compress file (default: docker-compress.yml)
+          --verbose        Show debug output
+
+      Commands:
+          generate           Generate a new docker-compose.yml file
+          version            Show the docker-compress version information
+
 #### Important Notes
 
 Since the feature set is still in it's early stages this does not work with all docker-compose syntax. The `extend` feature should be avoided although it does work in practice if you have volumes, dockerfile, or build nested inside the file that you are extending the paths will not be updated properly. `env_file` is not supported currently but will be soon I just haven't had time to add it yet and I don't use it often so it's at the back of the list.
+
+https://github.com/docker/compose/issues/2092
 
 #### Example
 
