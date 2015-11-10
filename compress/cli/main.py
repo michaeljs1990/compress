@@ -33,7 +33,7 @@ class CompressCommand(object):
             gen_cmd = GenerateCommand(arguments)
             gen_cmd.run()
         if cmd == "version":
-            print "0.1.3"
+            print "0.2.0"
 
 def main():
     """
