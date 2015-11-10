@@ -93,6 +93,10 @@ This would generate a file that looks like so. Docker compress does allow you to
 
 Wow! Look at all the information you didn't have to duplicate. Amazing!
 
+All you need to do now is run whatever docker-compose commands you normally would passing in the -f flag to specify docker-compose.gen.yml
+
+    docker-compose -f docker-compose.gen.yml up -d
+
 #### Development
 
 The following are requirement to develop. Although you can do it in different ways doing so will likely result in issues. All commands are assumed to be run from the root of this project. [PEP0008](https://www.python.org/dev/peps/pep-0008) compliant code is required.
